@@ -2,6 +2,10 @@
 [エラトステネスの篩の活用法を総特集！ 〜 高速素因数分解・メビウスの反転公式 〜](https://qiita.com/drken/items/3beb679e54266f20ab63)
 """
 
+from typing import Optional
+
+import statistics
+
 from array import array
 
 
@@ -78,6 +82,30 @@ class Eratosthenes:
                     res.append(res[i] * v)
 
         return res
+
+    def lcm_factors(self, A: list[int]) -> dict[int, int]:
+        """複数整数の最小公倍数を素因数分解形式で返す
+        {素因子: 最大指数}"""
+        res = {}
+
+        for a in A:
+            for p, exp in self.factorize(a):
+                res[p] = max(res.get(p, 0), exp)
+
+        return res
+
+    @staticmethod
+    def factor_product(factors: dict[int, int], mod: int | None = None) -> int:
+        """素因数分解形式から整数を復元する。mod指定時は剰余を返す"""
+        ans = 1
+
+        for p, exp in factors.items():
+            if mod is None:
+                ans *= pow(p, exp)
+            else:
+                ans = ans * pow(p, exp, mod) % mod
+
+        return ans
 
 
 # 高速ゼータ変換
