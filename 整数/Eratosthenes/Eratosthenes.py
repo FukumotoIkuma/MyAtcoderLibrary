@@ -2,10 +2,6 @@
 [エラトステネスの篩の活用法を総特集！ 〜 高速素因数分解・メビウスの反転公式 〜](https://qiita.com/drken/items/3beb679e54266f20ab63)
 """
 
-from typing import Optional
-
-import statistics
-
 from array import array
 
 
