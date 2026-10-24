@@ -7,7 +7,6 @@ weight1の移動は通常のBFS同様に右側に追加する。
 すなわち、vertexを訪れたこととが最小のdistanceが確定したことを意味しない。
 最小のdistanceが確定したのはキューからそのvertexを取り出したときである。
 """
-# https://atcoder.jp/contests/abc481/tasks/abc481_d
 
 from collections import deque
 
@@ -15,6 +14,7 @@ from collections import deque
 INF = float("inf")
 
 
+# https://atcoder.jp/contests/abc481/tasks/abc481_d
 # N頂点M辺(A[i]->B[i])の有向グラフにおいて、S->Tへ移動する場合
 def solve(N: int, M: int, S: int, T: int, A: list[int], B: list[int]):
     # weight = 0となる移動も特定する
