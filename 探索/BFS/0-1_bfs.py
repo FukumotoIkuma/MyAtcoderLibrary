@@ -14,31 +14,37 @@ from collections import deque
 
 # N頂点M辺(A[i]->B[i])の有向グラフにおいて、S->Tへ移動する場合
 def solve(N: int, M: int, S: int, T: int, A: list[int], B: list[int]):
-    # グラフの頂点に辺を追加する
-    # 同時にweight = 0となる移動も特定する
-    G = [[] for _ in range(N + 1)]  # Graph
+    # weight = 0となる移動も特定する
     mn_next = [float("inf")] * (N + 1)
     for a, b in zip(A, B):
         mn_next[a] = min(mn_next[a], b)
-        G[a].append(b)
+
+    # グラフの頂点に辺を追加する
+    G = [[] for _ in range(N + 1)]  # Graph
+    for a, b in zip(A, B):
+        w = mn_next[a] != b
+        G[a].append((w, b))
 
     # vertexまでの最善距離を管理する配列
-    dist: list[float] = [float("inf")] * (N + 1)  # distance
+    dist = [float("inf")] * (N + 1)  # distance
     dist[S] = 0
 
     # 0-1 BFS
-    que = deque([(S, 0)])
+    que = deque([(0, S)])
     while que:
-        v, d = que.popleft()
-        if v == T:
-            print(d)
-            return
+        d, v = que.popleft()
 
         # 記録されている最善の距離と追加された時点の距離が異なれば探索しない
         if dist[v] != d:
             continue
-        for nv in G[v]:
-            w = mn_next[v] != nv  # weight
+
+        # 最善のコストでゴールに到達したので終了
+        if v == T:
+            print(d)
+            return
+
+        # 次のvertex をキューに追加
+        for w, nv in G[v]:
             nd = d + w
 
             # 処理によりコストが改善しない場合は追加しない
@@ -47,7 +53,7 @@ def solve(N: int, M: int, S: int, T: int, A: list[int], B: list[int]):
 
             dist[nv] = nd
             if w == 0:
-                que.appendleft((nv, nd))
+                que.appendleft((nd, nv))
             else:
-                que.append((nv, nd))
+                que.append((nd, nv))
     print(-1)
