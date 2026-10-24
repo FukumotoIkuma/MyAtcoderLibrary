@@ -12,21 +12,24 @@ weight1の移動は通常のBFS同様に右側に追加する。
 from collections import deque
 
 
+INF = float("inf")
+
+
 # N頂点M辺(A[i]->B[i])の有向グラフにおいて、S->Tへ移動する場合
 def solve(N: int, M: int, S: int, T: int, A: list[int], B: list[int]):
     # weight = 0となる移動も特定する
-    mn_next = [float("inf")] * (N + 1)
+    mn_next = [INF] * (N + 1)
     for a, b in zip(A, B):
         mn_next[a] = min(mn_next[a], b)
 
     # グラフの頂点に辺を追加する
-    G = [[] for _ in range(N + 1)]  # Graph
+    G: list[list[tuple[int, int]]] = [[] for _ in range(N + 1)]  # Graph
     for a, b in zip(A, B):
         w = mn_next[a] != b
         G[a].append((w, b))
 
     # vertexまでの最善距離を管理する配列
-    dist = [float("inf")] * (N + 1)  # distance
+    dist = [INF] * (N + 1)  # distance
     dist[S] = 0
 
     # 0-1 BFS
