@@ -7,6 +7,8 @@ from array import array
 
 class Eratosthenes:
     def __init__(self, N):
+        self.limit = N
+        self.primes = []
         # テーブル
         self.isprime: bytearray = bytearray([1]) * (N + 1)
 
@@ -28,6 +30,9 @@ class Eratosthenes:
             if not self.isprime[p]:
                 continue
 
+            # 素数として追加
+            self.primes.append(p)
+
             # メビウス: p の倍数は符号反転
             for q in range(p, N + 1, p):
                 self.mobius[q] *= -1
@@ -44,6 +49,9 @@ class Eratosthenes:
 
     # 高速素因数分解
     # (素因子,指数) の素因子昇順リストを返す
+    # n <= N の範囲に制限されることに注意。
+    # nの素因数分解には<=isqrt(N)の範囲の素数がわかって入れば十分だが、
+    # この実装ではNまでの素数を列挙するためNのオーダーには注意が必要
     def factorize(self, n) -> list[tuple[int, int]]:
         res = []
 
