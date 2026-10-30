@@ -1,13 +1,16 @@
 """
 座標平面上の原点意外に存在する点を0°以上360°未満の偏角の昇順にする
-原点は偏角が定義できないので入力してはいけない。
+原点(center)は偏角が定義できないので入力してはいけない。
 """
 
 from functools import cmp_to_key
 
 
 # O(N logN)
-def angle_sort(P: list[tuple[int, int]]):
+def angle_sort(P: list[tuple[int, int]], center: tuple[int, int] = (0, 0)):
+
+    P = [(x - center[0], y - center[1]) for x, y in P]
+
     def cross(a: tuple[int, int], b: tuple[int, int]):
         x1, y1 = a
         x2, y2 = b
@@ -30,6 +33,8 @@ def angle_sort(P: list[tuple[int, int]]):
             return 1
         return 0
 
+    # centerを原点とした座標系で返す
+    # (ベクトル計算もろもろその方が楽な場合が多い.元の座標が必要なら最後に移動すればいい)
     return sorted(P, key=cmp_to_key(angle_cmp))
 
 
