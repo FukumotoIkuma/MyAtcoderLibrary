@@ -7,7 +7,8 @@ class PrimeFactorizer:
         self.sieve = sieve
 
     def factorize(self, n: int) -> list[tuple[int, int]]:
-        """1 <= n <= sieve.limit**2 の完全な素因数分解"""
+        """1 <= n <= sieve.limit**2 の完全な素因数分解,
+        (p,exp)のリストを返す"""
 
         M = self.sieve.limit
 

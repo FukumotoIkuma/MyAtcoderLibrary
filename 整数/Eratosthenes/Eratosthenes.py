@@ -70,11 +70,24 @@ class Eratosthenes:
 
     # 高速約数列挙
     # 約数のリストを返す（昇順ではない）
-    def divisors(self, n) -> list[int]:
+    def divisors(self, n: int, pf: list[tuple[int, int]] | None = None) -> list[int]:
+        """
+        Args
+        n(int): 約数を列挙する対象の整数
+        pf(list[tuple[int,int]]): nを素因数分解した(p,exp)のリスト
+
+        Kの約数の個数をd(K)とすると
+        K = 10**6 , d(K) = 240
+        K = 10**9 , d(K) = 1344
+        K = 10**12, d(K) = 6720
+        K = 10**18, d(K) = 103680
+
+        """
         res = [1]
 
         # 素因数分解
-        pf = self.factorize(n)
+        if not pf:
+            pf = self.factorize(n)
 
         # 約数列挙
         for p, exp in pf:
