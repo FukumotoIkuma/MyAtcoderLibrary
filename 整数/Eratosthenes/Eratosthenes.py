@@ -2,11 +2,11 @@
 [エラトステネスの篩の活用法を総特集！ 〜 高速素因数分解・メビウスの反転公式 〜](https://qiita.com/drken/items/3beb679e54266f20ab63)
 """
 
-from array import array
-
 
 class Eratosthenes:
     def __init__(self, N):
+        from array import array
+
         self.limit = N
         self.primes = []
         # テーブル
