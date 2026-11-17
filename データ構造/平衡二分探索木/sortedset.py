@@ -5,9 +5,9 @@
 通常のsetに対し、その要素が集合の中で何番目に小さいか
 逆に小さい方から何番目かをlogNで取得できる
 
-多くの言語では組み込み又はライブラリで実装されているのだが、pythonには無いらしく自作になる。
+sortedcontainersよりも高速な実装。
 pythonでは平衡二分探索木のアルゴリズムをそのまま実装するより、（少なくとも競プロの範囲においては）
-平方分割を利用するのが高速らしい。
+平方分割を利用するのが高速らしい（二倍くらい？）。
 そしてtatyamさんが作成したtatyam-setを利用するのが賢いという話。tatyamさんありがとう
 
 リンク先からコピペした方が安全だけど、ここでは警告系消したのを書いておく
@@ -42,11 +42,6 @@ for i in range(len(a)):
 とベタ書きすると一番速いです。
 (どの bucket にあるかを探すのが 1 回に減るので)
 """
-
-
-# できるだけリンク先からコピペ。バグ修正あるかもしれんから
-# https://github.com/tatyam-prime/SortedSet/blob/main/SortedSet.py
-
 
 import math
 from bisect import bisect_left, bisect_right
