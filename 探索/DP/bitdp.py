@@ -18,3 +18,32 @@ Sをどのように遷移させるかだが、
 
 N bit目までを使いk個の要素がある集合については、k-1個の要素を含む集合について全て考慮済みのため昇順に処理すれば問題ない
 """
+
+"""ジェネレータを使うオーバーヘッドがあるので
+高速化の必要性があるときはインラインでつかえばいい
+mask      101100
+-mask     010100  (下位6ビットで表現)
+----------------
+&         000100
+"""
+
+
+def bits(mask):
+    """set bit enumeration
+    bitがたっている部分のみを返す関数
+    [0, mask.bit_length) bit
+    """
+
+    while mask:
+        b = mask & -mask
+        yield b.bit_length() - 1
+        mask ^= b
+
+
+# 以下利用イメージ
+# 各maskについてさらに詳細な情報をもってもいいんだぞ
+N = 10
+dp = [0] * (1 << (N - 1))
+for mask in range(1 << N):
+    for i in bits(mask):
+        dp[mask] = max(dp[mask], dp[mask ^ (1 << i)])
